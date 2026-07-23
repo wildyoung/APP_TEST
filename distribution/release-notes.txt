@@ -1,6 +1,6 @@
-Firebase App Distribution fixed-installer verification
+Firebase App Distribution phone notification test
 
-- Updated to version 1.4.2
+- Updated to version 1.4.3
 - Keeps the bright violet and coral card design
-- Verifies the AppCompat installer fix from version 1.4.1
-- Tests a complete in-app update over the stable-signing 1.4.1 baseline
+- Triggers a fresh update notification on tester phones
+- Verifies the complete in-app update flow from version 1.4.2

@@ -105,7 +105,7 @@ jobs:
           if-no-files-found: error
 
       - name: Validate Firebase configuration
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.distribute }}
+        if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.distribute) }}
         env:
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
@@ -126,13 +126,13 @@ jobs:
           }
 
       - name: Authenticate to Google Cloud
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.distribute }}
+        if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.distribute) }}
         uses: google-github-actions/auth@v3
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
       - name: Distribute APK to Firebase testers
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.distribute }}
+        if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.distribute) }}
         env:
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
           FIREBASE_TESTER_GROUPS: ${{ vars.FIREBASE_TESTER_GROUPS }}

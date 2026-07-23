@@ -10,10 +10,10 @@ void main() {
 
     expect(find.text('LIVE UPDATE'), findsOneWidget);
     expect(find.text('A fresh update\nhas landed!'), findsOneWidget);
-    expect(find.text('VERSION 1.4.2'), findsOneWidget);
+    expect(find.text('VERSION 1.4.3'), findsOneWidget);
     expect(find.text('Current version'), findsOneWidget);
-    expect(find.text('1.4.2'), findsOneWidget);
-    expect(find.text('Confirm version 1.4.2'), findsOneWidget);
+    expect(find.text('1.4.3'), findsOneWidget);
+    expect(find.text('Confirm version 1.4.3'), findsOneWidget);
 
     await tester.ensureVisible(find.byKey(const Key('verify-button')));
     await tester.pumpAndSettle();
@@ -21,6 +21,6 @@ void main() {
     await tester.pump();
 
     expect(find.text('Confirmed (1)'), findsOneWidget);
-    expect(find.text('Version 1.4.2 is installed and ready.'), findsOneWidget);
+    expect(find.text('Version 1.4.3 is installed and ready.'), findsOneWidget);
   });
 }
