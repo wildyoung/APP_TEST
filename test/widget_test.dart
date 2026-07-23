@@ -3,19 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('업데이트 디자인이 표시되고 확인 버튼이 동작한다', (tester) async {
+  testWidgets('version 1.4 design is visible and confirm button works', (
+    tester,
+  ) async {
     await tester.pumpWidget(const AppTestApp());
 
-    expect(find.text('UPDATE TEST  •  v1.3.0'), findsOneWidget);
-    expect(find.text('새로운 화면으로\n업데이트됐어요'), findsOneWidget);
-    expect(find.text('현재 버전'), findsOneWidget);
-    expect(find.text('1.3.0'), findsOneWidget);
-    expect(find.text('업데이트 완료 확인'), findsOneWidget);
+    expect(find.text('LIVE UPDATE'), findsOneWidget);
+    expect(find.text('A fresh update\nhas landed!'), findsOneWidget);
+    expect(find.text('VERSION 1.4.0'), findsOneWidget);
+    expect(find.text('Current version'), findsOneWidget);
+    expect(find.text('1.4.0'), findsOneWidget);
+    expect(find.text('Confirm version 1.4.0'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(const Key('verify-button')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('verify-button')));
     await tester.pump();
 
-    expect(find.text('확인 완료 (1)'), findsOneWidget);
-    expect(find.text('1.3.0 기준 버전이 정상적으로 설치됐습니다.'), findsOneWidget);
+    expect(find.text('Confirmed (1)'), findsOneWidget);
+    expect(find.text('Version 1.4.0 is installed and ready.'), findsOneWidget);
   });
 }

@@ -14,8 +14,8 @@ class AppTestApp extends StatelessWidget {
       title: 'APP TEST',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF31E6B4),
-          brightness: Brightness.dark,
+          seedColor: const Color(0xFF7C4DFF),
+          brightness: Brightness.light,
         ),
         useMaterial3: true,
       ),
@@ -43,7 +43,7 @@ class _DistributionTestPageState extends State<DistributionTestPage> {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         const SnackBar(
-          content: Text('1.3.0 기준 버전이 정상적으로 설치됐습니다.'),
+          content: Text('Version 1.4.0 is installed and ready.'),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -58,138 +58,62 @@ class _DistributionTestPageState extends State<DistributionTestPage> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF061A2B),
-              Color(0xFF0C3D49),
-              Color(0xFF08766D),
+              Color(0xFFFFF1E8),
+              Color(0xFFF3E9FF),
+              Color(0xFFE7F7FF),
             ],
           ),
         ),
         child: Stack(
           children: [
             const Positioned(
-              top: -70,
-              right: -55,
-              child: _GlowCircle(size: 210, color: Color(0x3331E6B4)),
+              top: -55,
+              right: -45,
+              child: _Bubble(size: 180, color: Color(0x44FF7A68)),
             ),
             const Positioned(
-              bottom: -95,
-              left: -75,
-              child: _GlowCircle(size: 250, color: Color(0x267AC8FF)),
+              bottom: -70,
+              left: -55,
+              child: _Bubble(size: 220, color: Color(0x337C4DFF)),
             ),
             SafeArea(
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return SingleChildScrollView(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(22),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minHeight: constraints.maxHeight - 48,
+                        minHeight: constraints.maxHeight - 44,
                       ),
                       child: Center(
                         child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 480),
+                          constraints: const BoxConstraints(maxWidth: 500),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 14,
-                                    vertical: 8,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: 0.12),
-                                    borderRadius: BorderRadius.circular(999),
-                                    border: Border.all(
-                                      color: Colors.white.withValues(alpha: 0.18),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'UPDATE TEST  •  v1.3.0',
-                                    style: TextStyle(
-                                      color: Color(0xFF8FF7D9),
-                                      fontWeight: FontWeight.w700,
-                                      letterSpacing: 0.8,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 30),
-                              const Icon(
-                                Icons.auto_awesome_rounded,
-                                size: 64,
-                                color: Color(0xFF8FF7D9),
-                              ),
+                              const _TopBar(),
                               const SizedBox(height: 22),
-                              Text(
-                                '새로운 화면으로\n업데이트됐어요',
-                                style: Theme.of(context).textTheme.displaySmall
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800,
-                                      height: 1.12,
-                                    ),
-                              ),
-                              const SizedBox(height: 14),
-                              Text(
-                                'Firebase App Distribution을 통해 전달된\n두 번째 디자인 버전입니다.',
-                                style: Theme.of(context).textTheme.titleMedium
-                                    ?.copyWith(
-                                      color: Colors.white.withValues(alpha: 0.72),
-                                      height: 1.5,
-                                    ),
-                              ),
-                              const SizedBox(height: 30),
-                              Container(
-                                padding: const EdgeInsets.all(22),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.10),
-                                  borderRadius: BorderRadius.circular(28),
-                                  border: Border.all(
-                                    color: Colors.white.withValues(alpha: 0.16),
-                                  ),
-                                ),
-                                child: const Column(
-                                  children: [
-                                    _StatusRow(
-                                      icon: Icons.verified_rounded,
-                                      label: '현재 버전',
-                                      value: '1.3.0',
-                                    ),
-                                    _StatusDivider(),
-                                    _StatusRow(
-                                      icon: Icons.refresh_rounded,
-                                      label: '업데이트 확인',
-                                      value: '앱 실행 시 자동',
-                                    ),
-                                    _StatusDivider(),
-                                    _StatusRow(
-                                      icon: Icons.cloud_download_rounded,
-                                      label: '설치 방식',
-                                      value: 'Firebase APK',
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 22),
+                              const _HeroCard(),
+                              const SizedBox(height: 18),
+                              const _DetailsCard(),
+                              const SizedBox(height: 18),
                               FilledButton.icon(
                                 key: const Key('verify-button'),
                                 onPressed: _verifyApp,
                                 style: FilledButton.styleFrom(
-                                  backgroundColor: const Color(0xFF8FF7D9),
-                                  foregroundColor: const Color(0xFF073D3A),
-                                  minimumSize: const Size.fromHeight(56),
+                                  backgroundColor: const Color(0xFF19142D),
+                                  foregroundColor: Colors.white,
+                                  minimumSize: const Size.fromHeight(58),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18),
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
                                 ),
-                                icon: const Icon(Icons.check_rounded),
+                                icon: const Icon(Icons.verified_rounded),
                                 label: Text(
                                   _checkCount == 0
-                                      ? '업데이트 완료 확인'
-                                      : '확인 완료 ($_checkCount)',
+                                      ? 'Confirm version 1.4.0'
+                                      : 'Confirmed ($_checkCount)',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w800,
@@ -212,8 +136,232 @@ class _DistributionTestPageState extends State<DistributionTestPage> {
   }
 }
 
-class _GlowCircle extends StatelessWidget {
-  const _GlowCircle({required this.size, required this.color});
+class _TopBar extends StatelessWidget {
+  const _TopBar();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+          child: Text(
+            'APP TEST',
+            style: TextStyle(
+              color: Color(0xFF19142D),
+              fontSize: 18,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1.2,
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.72),
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(color: const Color(0x227C4DFF)),
+          ),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.circle, size: 9, color: Color(0xFF32C48D)),
+              SizedBox(width: 7),
+              Text(
+                'LIVE UPDATE',
+                style: TextStyle(
+                  color: Color(0xFF5D3BB5),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.6,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _HeroCard extends StatelessWidget {
+  const _HeroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(26),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF7C4DFF), Color(0xFFFF6F61)],
+        ),
+        borderRadius: BorderRadius.circular(32),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x337C4DFF),
+            blurRadius: 28,
+            offset: Offset(0, 14),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 58,
+            height: 58,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.20),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: const Icon(
+              Icons.rocket_launch_rounded,
+              size: 31,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 28),
+          const Text(
+            'A fresh update\nhas landed!',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 36,
+              height: 1.08,
+              fontWeight: FontWeight.w900,
+              letterSpacing: -1.1,
+            ),
+          ),
+          const SizedBox(height: 13),
+          Text(
+            'A brighter design delivered through Firebase App Distribution.',
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.82),
+              fontSize: 16,
+              height: 1.45,
+            ),
+          ),
+          const SizedBox(height: 22),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+            decoration: BoxDecoration(
+              color: const Color(0xFF19142D),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: const Text(
+              'VERSION 1.4.0',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.8,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DetailsCard extends StatelessWidget {
+  const _DetailsCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.78),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white),
+      ),
+      child: const Column(
+        children: [
+          _DetailRow(
+            icon: Icons.layers_rounded,
+            color: Color(0xFF7C4DFF),
+            label: 'Current version',
+            value: '1.4.0',
+          ),
+          _DetailDivider(),
+          _DetailRow(
+            icon: Icons.autorenew_rounded,
+            color: Color(0xFFFF6F61),
+            label: 'Update path',
+            value: 'In-app',
+          ),
+          _DetailDivider(),
+          _DetailRow(
+            icon: Icons.cloud_done_rounded,
+            color: Color(0xFF25A97B),
+            label: 'Delivery',
+            value: 'Firebase',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DetailDivider extends StatelessWidget {
+  const _DetailDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Divider(height: 1, color: Color(0x14000000));
+  }
+}
+
+class _DetailRow extends StatelessWidget {
+  const _DetailRow({
+    required this.icon,
+    required this.color,
+    required this.label,
+    required this.value,
+  });
+
+  final IconData icon;
+  final Color color;
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: Row(
+        children: [
+          Container(
+            width: 38,
+            height: 38,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: color, size: 21),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              label,
+              style: const TextStyle(color: Color(0xFF6C667A)),
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              color: Color(0xFF19142D),
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Bubble extends StatelessWidget {
+  const _Bubble({required this.size, required this.color});
 
   final double size;
   final Color color;
@@ -224,50 +372,6 @@ class _GlowCircle extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-    );
-  }
-}
-
-class _StatusDivider extends StatelessWidget {
-  const _StatusDivider();
-
-  @override
-  Widget build(BuildContext context) {
-    return Divider(height: 28, color: Colors.white.withValues(alpha: 0.12));
-  }
-}
-
-class _StatusRow extends StatelessWidget {
-  const _StatusRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  final IconData icon;
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 22, color: const Color(0xFF8FF7D9)),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            label,
-            style: TextStyle(color: Colors.white.withValues(alpha: 0.68)),
-          ),
-        ),
-        Text(
-          value,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ],
     );
   }
 }
