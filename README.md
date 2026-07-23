@@ -12,31 +12,42 @@ Flutter로 만든 Firebase App Distribution 배포 테스트 앱입니다. GitHu
 
 `android/` 폴더는 Flutter 버전과의 불일치를 방지하기 위해 저장소에 커밋하지 않습니다. CI가 고정된 Flutter 버전으로 공식 Android runner를 생성한 후 APK를 빌드합니다.
 
-## Firebase 최초 설정
+## 현재 배포 상태
 
-1. [Firebase Console](https://console.firebase.google.com/)에서 프로젝트를 생성합니다.
-2. Android 앱을 추가하고 패키지 이름을 정확히 `com.wildyoung.app_test`로 입력합니다. 패키지 이름은 대소문자를 구분하며 등록 후 변경할 수 없습니다.
-3. Firebase Console의 **App Distribution** 메뉴에서 시작하기를 누릅니다.
-4. **테스터 및 그룹**에서 테스터를 추가하고 그룹을 만듭니다. 그룹 별칭(예: `qa-team`)을 기억합니다.
-5. Google Cloud Console에서 서비스 계정을 만들고 **Firebase App Distribution Admin** 역할을 부여한 뒤 JSON 키를 생성합니다.
+2026-07-23에 Firebase 프로젝트 구성과 첫 App Distribution 배포를 완료했습니다.
+
+| 항목 | 값 |
+| --- | --- |
+| Firebase 프로젝트 ID | `wildyoung-app-test-20260723` |
+| Android 패키지 | `com.wildyoung.app_test` |
+| 테스터 그룹 별칭 | `app-test-testers` |
+| CI 서비스 계정 | `app-distribution-ci@wildyoung-app-test-20260723.iam.gserviceaccount.com` |
+| 첫 배포 결과 | [GitHub Actions 실행 #29971667388](https://github.com/wildyoung/APP_TEST/actions/runs/29971667388) |
+| Firebase 릴리스 | [App Distribution Console](https://console.firebase.google.com/project/wildyoung-app-test-20260723/appdistribution/app/android:com.wildyoung.app_test/releases/4ti1lu1o1n6jg) |
+
+## Firebase 설정
+
+다음 초기 설정은 완료된 상태입니다.
+
+1. Firebase 프로젝트 `wildyoung-app-test-20260723` 생성
+2. Android 앱 `com.wildyoung.app_test` 등록
+3. App Distribution 테스터 그룹 `app-test-testers` 생성
+4. CI 서비스 계정에 **Firebase App Distribution Admin** 역할 부여
+5. GitHub Actions Secret과 Variable 등록
 
 이 앱은 Firebase 제품을 런타임에 사용하지 않으므로 `google-services.json`은 필요하지 않습니다. App Distribution 업로드에는 Firebase App ID와 CI 서비스 계정만 사용합니다.
 
 ## GitHub Actions 값 등록
 
-저장소의 **Settings → Secrets and variables → Actions**에서 다음 값을 등록합니다.
+저장소의 **Settings → Secrets and variables → Actions**에 다음 값이 등록되어 있습니다.
 
 | 종류 | 이름 | 값 |
 | --- | --- | --- |
 | Repository secret | `FIREBASE_APP_ID` | Firebase 프로젝트 설정에 표시되는 Android App ID (`1:...:android:...`) |
-| Repository secret | `FIREBASE_SERVICE_ACCOUNT` | App Distribution Admin 역할을 가진 서비스 계정 JSON 전체 내용 |
-| Repository variable | `FIREBASE_TESTER_GROUPS` | Firebase 테스터 그룹 별칭. 여러 개는 쉼표로 구분 |
+| Repository secret | `FIREBASE_SERVICE_ACCOUNT` | App Distribution Admin 역할을 가진 CI 서비스 계정 JSON |
+| Repository variable | `FIREBASE_TESTER_GROUPS` | `app-test-testers` |
 
-서비스 계정 JSON은 가능하면 한 줄로 축소해서 Secret에 저장합니다.
-
-```bash
-jq -c . service-account.json
-```
+서비스 계정 키의 로컬 임시 파일은 Secret 등록 직후 삭제했습니다.
 
 ## 배포 실행
 
