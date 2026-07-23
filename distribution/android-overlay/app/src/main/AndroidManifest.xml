@@ -22,6 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.google.firebase.appdistribution.impl.InstallActivity"
+            android:theme="@style/FirebaseAppDistributionTheme" />
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

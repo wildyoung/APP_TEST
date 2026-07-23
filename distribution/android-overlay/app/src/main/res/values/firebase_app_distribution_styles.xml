@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Firebase's installer extends AppCompatActivity and must not inherit
+         Flutter's platform NormalTheme. -->
+    <style
+        name="FirebaseAppDistributionTheme"
+        parent="Theme.AppCompat.Light.NoActionBar" />
+</resources>
