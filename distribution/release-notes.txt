@@ -1,6 +1,6 @@
-Firebase App Distribution in-app update installer fix
+Firebase App Distribution fixed-installer verification
 
-- Updated to version 1.4.1
+- Updated to version 1.4.2
 - Keeps the bright violet and coral card design
-- Applies an AppCompat theme to the Firebase installer activity
-- Verifies installation over the stable-signing 1.3.0 baseline
+- Verifies the AppCompat installer fix from version 1.4.1
+- Tests a complete in-app update over the stable-signing 1.4.1 baseline

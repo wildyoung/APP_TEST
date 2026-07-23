@@ -43,7 +43,7 @@ class _DistributionTestPageState extends State<DistributionTestPage> {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         const SnackBar(
-          content: Text('Version 1.4.1 is installed and ready.'),
+          content: Text('Version 1.4.2 is installed and ready.'),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -112,7 +112,7 @@ class _DistributionTestPageState extends State<DistributionTestPage> {
                                 icon: const Icon(Icons.verified_rounded),
                                 label: Text(
                                   _checkCount == 0
-                                      ? 'Confirm version 1.4.1'
+                                      ? 'Confirm version 1.4.2'
                                       : 'Confirmed ($_checkCount)',
                                   style: const TextStyle(
                                     fontSize: 16,
@@ -249,7 +249,7 @@ class _HeroCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
             ),
             child: const Text(
-              'VERSION 1.4.1',
+              'VERSION 1.4.2',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w800,
@@ -281,7 +281,7 @@ class _DetailsCard extends StatelessWidget {
             icon: Icons.layers_rounded,
             color: Color(0xFF7C4DFF),
             label: 'Current version',
-            value: '1.4.1',
+            value: '1.4.2',
           ),
           _DetailDivider(),
           _DetailRow(
