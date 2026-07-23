@@ -1,0 +1,34 @@
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+
+# Generated platform projects
+# This repository generates the Android runner with the pinned Flutter SDK in CI.
+android/
+ios/
+linux/
+macos/
+web/
+windows/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Local secrets and Firebase credentials
+*.jks
+*.keystore
+key.properties
+service-account*.json
+gha-creds-*.json
+
+# OS files
+.DS_Store
+Thumbs.db

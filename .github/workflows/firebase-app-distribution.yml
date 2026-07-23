@@ -1,0 +1,123 @@
+name: Flutter Firebase App Distribution
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      distribute:
+        description: "Firebase App Distribution에 APK 배포"
+        required: true
+        default: true
+        type: boolean
+
+concurrency:
+  group: firebase-app-distribution-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-distribute:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.44.7"
+          channel: stable
+          cache: true
+
+      - name: Generate Android runner
+        shell: bash
+        run: |
+          if [[ ! -d android ]]; then
+            flutter create \
+              --platforms=android \
+              --android-language=kotlin \
+              --org=com.wildyoung \
+              --project-name=app_test \
+              --no-pub \
+              "$RUNNER_TEMP/app_test_platform"
+            cp -R "$RUNNER_TEMP/app_test_platform/android" ./android
+          fi
+
+      - name: Restore test signing key
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: android-test-signing-${{ github.repository_id }}
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test
+        run: flutter test
+
+      - name: Build release APK
+        run: >-
+          flutter build apk --release
+          --build-name=1.0.0
+          --build-number=${{ github.run_number }}
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-test-${{ github.run_number }}
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+
+      - name: Validate Firebase configuration
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.distribute }}
+        env:
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_TESTER_GROUPS: ${{ vars.FIREBASE_TESTER_GROUPS }}
+        shell: bash
+        run: |
+          [[ -n "$FIREBASE_APP_ID" ]] || {
+            echo 'FIREBASE_APP_ID secret is required.' >&2
+            exit 1
+          }
+          [[ -n "$FIREBASE_SERVICE_ACCOUNT" ]] || {
+            echo 'FIREBASE_SERVICE_ACCOUNT secret is required.' >&2
+            exit 1
+          }
+          [[ -n "$FIREBASE_TESTER_GROUPS" ]] || {
+            echo 'FIREBASE_TESTER_GROUPS variable is required.' >&2
+            exit 1
+          }
+
+      - name: Authenticate to Google Cloud
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.distribute }}
+        uses: google-github-actions/auth@v3
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: Distribute APK to Firebase testers
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.distribute }}
+        env:
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_TESTER_GROUPS: ${{ vars.FIREBASE_TESTER_GROUPS }}
+        shell: bash
+        run: |
+          npx --yes firebase-tools@15.24.0 appdistribution:distribute \
+            build/app/outputs/flutter-apk/app-release.apk \
+            --app "$FIREBASE_APP_ID" \
+            --groups "$FIREBASE_TESTER_GROUPS" \
+            --release-notes-file distribution/release-notes.txt

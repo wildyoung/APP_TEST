@@ -1,0 +1,5 @@
+Flutter Firebase App Distribution 배포 테스트
+
+- 간단한 설치 완료 화면
+- 실행 확인 버튼과 상태 메시지
+- GitHub Actions 자동 빌드 및 배포
