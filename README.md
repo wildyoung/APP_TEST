@@ -8,6 +8,7 @@ Flutter로 만든 Firebase App Distribution 배포 테스트 앱입니다. GitHu
 - Android 애플리케이션 ID: `com.wildyoung.app_test`
 - Firebase CLI 15.24.0
 - GitHub Actions 수동 배포(`workflow_dispatch`)
+- Firebase App Distribution Android SDK 인앱 업데이트 알림
 - 위젯 테스트 및 정적 분석
 
 `android/` 폴더는 Flutter 버전과의 불일치를 방지하기 위해 저장소에 커밋하지 않습니다. CI가 고정된 Flutter 버전으로 공식 Android runner를 생성한 후 APK를 빌드합니다.
@@ -35,7 +36,9 @@ Flutter로 만든 Firebase App Distribution 배포 테스트 앱입니다. GitHu
 4. CI 서비스 계정에 **Firebase App Distribution Admin** 역할 부여
 5. GitHub Actions Secret과 Variable 등록
 
-이 앱은 Firebase 제품을 런타임에 사용하지 않으므로 `google-services.json`은 필요하지 않습니다. App Distribution 업로드에는 Firebase App ID와 CI 서비스 계정만 사용합니다.
+배포용 `firebase` Android flavor에는 Firebase App Distribution Android SDK가 연결되어 있습니다. 앱이 실행될 때 테스터 로그인을 확인하고 새 릴리스가 있으면 기본 업데이트 대화상자를 표시합니다. 이 SDK에는 자동 업데이트 기능이 포함되어 있으므로 Google Play 배포용 flavor에는 포함하지 않아야 합니다.
+
+인앱 업데이트 알림을 처음 사용하기 전에 Google Cloud Console에서 Firebase App Testers API를 한 번 활성화해야 합니다. [Firebase App Distribution 알림 설정 안내](https://firebase.google.com/docs/app-distribution/set-up-alerts?platform=android)
 
 ## GitHub Actions 값 등록
 
@@ -73,7 +76,9 @@ flutter run
 ```bash
 flutter analyze
 flutter test
-flutter build apk --release
+flutter build apk --flavor firebase --release --build-number=1
 ```
+
+`firebase` flavor는 CI가 `tool/configure-firebase-app-distribution.sh`로 Android runner와 `google-services.json`을 구성한 뒤 빌드합니다. 앱 실행 시 업데이트 확인은 Firebase App Distribution에서 배포한 APK에서만 동작하며, 일반 Flutter debug 빌드에서는 동작하지 않습니다.
 
 테스트용 release 빌드는 Flutter 기본 템플릿의 debug signing key를 사용합니다. 실제 스토어 출시용 앱으로 전환할 때는 별도의 upload keystore와 안전한 CI Secret 구성을 추가해야 합니다.

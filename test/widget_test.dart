@@ -8,6 +8,10 @@ void main() {
 
     expect(find.text('Firebase App Distribution'), findsOneWidget);
     expect(find.text('Flutter 배포 테스트 앱'), findsOneWidget);
+    expect(
+      find.text('설치가 완료되었습니다. 앱을 실행할 때 새 배포 버전을 자동으로 확인합니다.'),
+      findsOneWidget,
+    );
     expect(find.text('실행 확인'), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('verify-button')));

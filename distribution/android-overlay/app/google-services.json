@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "652080038328",
+    "project_id": "wildyoung-app-test-20260723",
+    "storage_bucket": "wildyoung-app-test-20260723.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652080038328:android:49cb6bf74c54db569bcf4d",
+        "android_client_info": {
+          "package_name": "com.wildyoung.app_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSvzhSge1EgzRetXLSDVdtwHlk9k3lYso"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

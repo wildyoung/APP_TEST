@@ -1,5 +1,5 @@
-Flutter Firebase App Distribution 배포 테스트
+Firebase App Distribution 인앱 업데이트 테스트 버전
 
-- 간단한 설치 완료 화면
-- 실행 확인 버튼과 상태 메시지
-- GitHub Actions 자동 빌드 및 배포
+- 앱 실행 시 새 배포 버전 자동 확인
+- 새 버전이 있으면 업데이트 확인창 표시
+- APK 다운로드 후 Android 설치 화면 연결

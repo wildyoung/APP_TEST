@@ -54,6 +54,10 @@ jobs:
             cp -R "$RUNNER_TEMP/app_test_platform/android" ./android
           fi
 
+      - name: Configure Firebase in-app updates
+        shell: bash
+        run: bash tool/configure-firebase-app-distribution.sh
+
       - name: Restore test signing key
         uses: actions/cache@v4
         with:
@@ -71,15 +75,14 @@ jobs:
 
       - name: Build release APK
         run: >-
-          flutter build apk --release
-          --build-name=1.0.0
+          flutter build apk --flavor firebase --release
           --build-number=${{ github.run_number }}
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-test-${{ github.run_number }}
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-firebase-release.apk
           if-no-files-found: error
 
       - name: Validate Firebase configuration
@@ -117,7 +120,7 @@ jobs:
         shell: bash
         run: |
           npx --yes firebase-tools@15.24.0 appdistribution:distribute \
-            build/app/outputs/flutter-apk/app-release.apk \
+            build/app/outputs/flutter-apk/app-firebase-release.apk \
             --app "$FIREBASE_APP_ID" \
             --groups "$FIREBASE_TESTER_GROUPS" \
             --release-notes-file distribution/release-notes.txt

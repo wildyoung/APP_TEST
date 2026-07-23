@@ -103,7 +103,7 @@ class _DistributionTestPageState extends State<DistributionTestPage> {
                                 const SizedBox(width: 14),
                                 const Expanded(
                                   child: Text(
-                                    '설치가 완료되었습니다. 아래 버튼으로 앱 동작을 확인해 보세요.',
+                                    '설치가 완료되었습니다. 앱을 실행할 때 새 배포 버전을 자동으로 확인합니다.',
                                   ),
                                 ),
                               ],
