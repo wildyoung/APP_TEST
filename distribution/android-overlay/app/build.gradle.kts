@@ -31,11 +31,20 @@ android {
         }
     }
 
+    signingConfigs {
+        create("firebaseTest") {
+            storeFile = rootProject.file("test-signing-key.jks")
+            storePassword = "android"
+            keyAlias = "app-test"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
-            // This test app keeps using the repository's cached debug key so
-            // Firebase builds can update one another on tester devices.
-            signingConfig = signingConfigs.getByName("debug")
+            // Test-only key persisted by GitHub Actions so Firebase builds
+            // can update one another on tester devices.
+            signingConfig = signingConfigs.getByName("firebaseTest")
         }
     }
 }

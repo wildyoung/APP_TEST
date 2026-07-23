@@ -81,4 +81,4 @@ flutter build apk --flavor firebase --release --build-number=1
 
 `firebase` flavor는 CI가 `tool/configure-firebase-app-distribution.sh`로 Android runner와 `google-services.json`을 구성한 뒤 빌드합니다. 앱 실행 시 업데이트 확인은 Firebase App Distribution에서 배포한 APK에서만 동작하며, 일반 Flutter debug 빌드에서는 동작하지 않습니다.
 
-테스트용 release 빌드는 Flutter 기본 템플릿의 debug signing key를 사용합니다. 실제 스토어 출시용 앱으로 전환할 때는 별도의 upload keystore와 안전한 CI Secret 구성을 추가해야 합니다.
+테스트용 release 빌드는 GitHub Actions 캐시에 보관되는 전용 테스트 키로 서명합니다. 같은 키를 계속 사용하므로 Firebase App Distribution에서 내려받은 새 APK가 기존 테스트 앱 위에 업데이트됩니다. 실제 스토어 출시용 앱으로 전환할 때는 별도의 upload keystore와 안전한 CI Secret 구성을 추가해야 합니다.

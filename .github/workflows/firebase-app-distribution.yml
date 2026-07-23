@@ -58,11 +58,30 @@ jobs:
         shell: bash
         run: bash tool/configure-firebase-app-distribution.sh
 
-      - name: Restore test signing key
+      - name: Restore stable test signing key
+        id: signing-key
         uses: actions/cache@v4
         with:
-          path: ~/.android/debug.keystore
-          key: android-test-signing-${{ github.repository_id }}
+          path: android/test-signing-key.jks
+          key: android-test-signing-v2-${{ github.repository_id }}
+
+      - name: Create stable test signing key
+        if: ${{ steps.signing-key.outputs.cache-hit != 'true' }}
+        shell: bash
+        run: >-
+          keytool -genkeypair -v
+          -keystore android/test-signing-key.jks
+          -storepass android
+          -keypass android
+          -alias app-test
+          -keyalg RSA
+          -keysize 2048
+          -validity 10000
+          -dname "CN=APP TEST, OU=Firebase Distribution, O=wildyoung, L=Seoul, C=KR"
+
+      - name: Validate stable test signing key
+        shell: bash
+        run: test -s android/test-signing-key.jks
 
       - name: Install dependencies
         run: flutter pub get

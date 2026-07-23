@@ -43,7 +43,7 @@ class _DistributionTestPageState extends State<DistributionTestPage> {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         const SnackBar(
-          content: Text('1.2.0 업데이트가 정상적으로 적용됐습니다.'),
+          content: Text('1.3.0 기준 버전이 정상적으로 설치됐습니다.'),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -107,7 +107,7 @@ class _DistributionTestPageState extends State<DistributionTestPage> {
                                     ),
                                   ),
                                   child: const Text(
-                                    'UPDATE TEST  •  v1.2.0',
+                                    'UPDATE TEST  •  v1.3.0',
                                     style: TextStyle(
                                       color: Color(0xFF8FF7D9),
                                       fontWeight: FontWeight.w700,
@@ -156,7 +156,7 @@ class _DistributionTestPageState extends State<DistributionTestPage> {
                                     _StatusRow(
                                       icon: Icons.verified_rounded,
                                       label: '현재 버전',
-                                      value: '1.2.0',
+                                      value: '1.3.0',
                                     ),
                                     _StatusDivider(),
                                     _StatusRow(
